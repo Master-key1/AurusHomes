@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,10 +21,8 @@
             background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
             color: white;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* SHARED HEADER NAVIGATION */
         .header-menu {
             position: fixed;
             top: 25px;
@@ -59,36 +57,25 @@
         }
 
         .header-item:hover { background: rgba(0,0,0,0.06); color: #000; }
-        .header-item:active { transform: scale(0.95); background: rgba(0,0,0,0.1); }
+        .active-tab { background: var(--primary) !important; color: white !important; }
 
-        .active-tab {
-            background: var(--primary) !important;
-            color: white !important;
-            box-shadow: 0 4px 15px var(--primary-glow);
-        }
-
-        /* TOOL SECTION */
-        #contentSection {
+        #toolSection {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-top: 60px; /* Offset for header */
         }
 
         .tool-card {
             width: 90%;
             max-width: 800px;
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 40px;
             padding: 50px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
-
-        h2 { font-size: 28px; margin-bottom: 10px; color: var(--primary); }
-        p { color: #94a3b8; margin-bottom: 30px; font-size: 15px; }
 
         textarea {
             width: 100%;
@@ -96,16 +83,12 @@
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 20px;
             padding: 20px;
-            color: #e2e8f0;
+            color: #fff;
             font-family: monospace;
-            font-size: 14px;
             margin-bottom: 25px;
             box-sizing: border-box;
             outline: none;
-            transition: border-color 0.3s;
         }
-
-        textarea:focus { border-color: var(--primary); }
 
         .btn-action {
             background: var(--primary);
@@ -115,41 +98,46 @@
             border-radius: 100px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 12px;
             cursor: pointer;
-            transition: all 0.3s;
         }
 
-        .btn-action:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        #resultArea { display: none; margin-top: 30px; }
     </style>
 </head>
 <body>
 
 <div class="header-menu">
-    <a th:href="@{/home}" class="header-item">Home</a>
-    <a th:href="@{/decryptor}" class="header-item active-tab">Decryptor</a>
-    <a th:href="@{/requestor}" class="header-item">Transaction Requestor</a>
-    <a th:href="@{/logger}" class="header-item">Transaction Logger</a>
-    <a th:href="@{/comparator}" class="header-item">Comparator</a>
+    <a href="index.html" class="header-item">Home</a>
+    <a href="decryptor.html" class="header-item active-tab">Decryptor</a>
+    <a href="#" class="header-item">Transaction Requestor</a>
+    <a href="#" class="header-item">Transaction Logger</a>
+    <a href="#" class="header-item">Comparator</a>
 </div>
 
-<div id="contentSection">
+<div id="toolSection">
     <div class="tool-card">
-        <h2>Data Decryptor</h2>
-        <p>Paste your encrypted transaction payload below to decode the details.</p>
+        <h2 style="color: var(--primary);">Data Decryptor</h2>
+        <p style="color: #94a3b8;">Enter encrypted text and click decode.</p>
         
-        <form th:action="@{/decrypt}" method="post">
-            <textarea name="payload" rows="8" placeholder="Enter encrypted string..."></textarea>
-            <button type="submit" class="btn-action">Decode Payload</button>
-        </form>
+        <textarea id="payloadInput" rows="6" placeholder="Paste data here..."></textarea>
+        <button class="btn-action" onclick="handleDecrypt()">Decode Payload</button>
 
-        <div th:if="${decryptedData}" style="margin-top: 30px;">
-            <h4 style="font-size: 12px; text-transform: uppercase; color: #64748b;">Decrypted Result:</h4>
-            <textarea readonly th:text="${decryptedData}" style="border-color: #22c55e;"></textarea>
+        <div id="resultArea">
+            <h4 style="color: #64748b; font-size: 12px; text-transform: uppercase;">Decrypted Result:</h4>
+            <textarea id="outputResult" readonly style="border-color: #22c55e;"></textarea>
         </div>
     </div>
 </div>
 
+<script>
+    function handleDecrypt() {
+        const input = document.getElementById('payloadInput').value;
+        if(!input) return alert("Please enter some data!");
+
+        // This simulates a decryption process
+        document.getElementById('resultArea').style.display = 'block';
+        document.getElementById('outputResult').value = "SUCCESS: Decrypted payload from data [" + btoa(input).substring(0, 10) + "...]";
+    }
+</script>
 </body>
 </html>
