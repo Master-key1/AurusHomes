@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* SHARED HEADER NAVIGATION */
         .header-menu {
             position: fixed;
             top: 25px;
@@ -56,11 +55,10 @@
             text-decoration: none;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer !important;
-            user-select: none;
         }
 
         .header-item:hover { background: rgba(0,0,0,0.06); color: #000; }
-        .header-item:active { transform: scale(0.95); background: rgba(0,0,0,0.1); }
+        .header-item:active { transform: scale(0.95); }
 
         .active-tab {
             background: var(--primary) !important;
@@ -68,8 +66,7 @@
             box-shadow: 0 4px 15px var(--primary-glow);
         }
 
-        /* SLIDER SECTION */
-        #contentSection {
+        #homeSection {
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -113,14 +110,14 @@
 <body>
 
 <div class="header-menu">
-    <a th:href="@{/home}" class="header-item active-tab">Home</a>
-    <a th:href="@{/decryptor}" class="header-item">Decryptor</a>
-    <a th:href="@{/requestor}" class="header-item">Transaction Requestor</a>
-    <a th:href="@{/logger}" class="header-item">Transaction Logger</a>
-    <a th:href="@{/comparator}" class="header-item">Comparator</a>
+    <a href="index.html" class="header-item active-tab">Home</a>
+    <a href="decryptor.html" class="header-item">Decryptor</a>
+    <a href="#" class="header-item">Transaction Requestor</a>
+    <a href="#" class="header-item">Transaction Logger</a>
+    <a href="#" class="header-item">Comparator</a>
 </div>
 
-<div id="contentSection">
+<div id="homeSection">
     <div class="slider-container">
         <div class="slider-box">
             <img class="slider-img active" src="https://www.aurusinc.com/assets/inthenews/aurus-mastercard.png">
